@@ -6,6 +6,17 @@ Système de calcul distribué utilisant RabbitMQ pour traiter des opérations ma
 
 Application permettant d'envoyer des calculs mathématiques (addition, soustraction, multiplication, division) qui sont traités de manière distribuée par des workers spécialisés via RabbitMQ. Les résultats sont affichés en temps réel dans une interface web moderne.
 
+## 🏗️ Architecture RabbitMQ
+
+![Architecture RabbitMQ](<assets/images/Diagramme%20sans%20nom.drawio%20(2).png>)
+
+Le système utilise une architecture RabbitMQ classique avec :
+
+- **Producer** : Le serveur web qui envoie les tâches de calcul vers RabbitMQ
+- **Exchange & Queues** : Routage des messages vers les files spécialisées (add_tasks, sub_tasks, mul_tasks, div_tasks)
+- **Workers (Consumers)** : 4 workers qui consomment les messages et effectuent les calculs
+- **Results Queue** : File de retour pour publier les résultats vers l'interface web
+
 ## 📋 Prérequis
 
 - **Docker** et **Docker Compose**
