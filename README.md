@@ -1,3 +1,14 @@
+## 👥 Équipe de Développement
+
+Ce projet a été réalisé en équipe par :
+
+- **Moussa Traore**
+- **Yacine Boucenna**
+- **Ryan Mambou Djemtchemeu**
+- **Ornelle Chougourou**
+
+---
+
 # 🧮 Système de Calcul Distribué RabbitMQ
 
 Système de calcul distribué utilisant RabbitMQ pour traiter des opérations mathématiques avec une interface web en temps réel.
