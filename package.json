@@ -1,0 +1,33 @@
+{
+  "name": "rabbitmq-distributed-computing",
+  "version": "1.0.0",
+  "description": "Système de calcul distribué utilisant RabbitMQ pour l'Institut de physique nucléaire NGI",
+  "main": "index.js",
+  "scripts": {
+    "start:producer": "node src/producer.js",
+    "start:consumer": "node src/consumer.js",
+    "start:worker": "node src/worker.js",
+    "start:worker:add": "node src/worker.js add",
+    "start:worker:sub": "node src/worker.js sub",
+    "start:worker:mul": "node src/worker.js mul",
+    "start:worker:div": "node src/worker.js div",
+    "start:web": "node src/web-server.js",
+    "test": "node test/test.js"
+  },
+  "keywords": [
+    "rabbitmq",
+    "distributed-computing",
+    "amqp",
+    "javascript"
+  ],
+  "author": "NGI Physics Institute",
+  "license": "MIT",
+  "dependencies": {
+    "amqplib": "^0.10.3",
+    "express": "^5.1.0",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

@@ -1,0 +1,104 @@
+services:
+  # Serveur RabbitMQ
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq-server
+    ports:
+      - "5672:5672" # AMQP port
+      - "15672:15672" # Management UI port
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - rabbitmq_network
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Serveur Web (Interface utilisateur)
+  web-server:
+    build: .
+    container_name: rabbitmq-web-server
+    ports:
+      - "3000:3000"
+    environment:
+      - RABBITMQ_URL=amqp://user:password@rabbitmq:5672
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - rabbitmq_network
+    command: ["node", "src/web-server.js"]
+    restart: unless-stopped
+
+  # Worker Addition
+  worker-add:
+    build: .
+    environment:
+      - RABBITMQ_URL=amqp://user:password@rabbitmq:5672
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - rabbitmq_network
+    command: ["node", "src/worker.js", "add"]
+    restart: unless-stopped
+    deploy:
+      replicas: 2
+
+  # Worker Soustraction
+  worker-sub:
+    build: .
+    environment:
+      - RABBITMQ_URL=amqp://user:password@rabbitmq:5672
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - rabbitmq_network
+    command: ["node", "src/worker.js", "sub"]
+    restart: unless-stopped
+    deploy:
+      replicas: 2
+
+  # Worker Multiplication
+  worker-mul:
+    build: .
+    environment:
+      - RABBITMQ_URL=amqp://user:password@rabbitmq:5672
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - rabbitmq_network
+    command: ["node", "src/worker.js", "mul"]
+    restart: unless-stopped
+    deploy:
+      replicas: 2
+
+  # Worker Division
+  worker-div:
+    build: .
+    environment:
+      - RABBITMQ_URL=amqp://user:password@rabbitmq:5672
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - rabbitmq_network
+    command: ["node", "src/worker.js", "div"]
+    restart: unless-stopped
+    deploy:
+      replicas: 2
+
+volumes:
+  rabbitmq_data:
+    driver: local
+
+networks:
+  rabbitmq_network:
+    driver: bridge
