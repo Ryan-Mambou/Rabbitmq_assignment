@@ -60,11 +60,12 @@ class WebServer {
     this.app.post("/api/calculate/random", async (req, res) => {
       try {
         const { operation } = req.body;
-        const [operand1, operand2] = generateOperands();
+        const operands = generateOperands();
+        console.log("Aleatoire -->", operands);
         const result = await this.sendCalculation(
           operation,
-          operand1,
-          operand2
+          operands.n1,
+          operands.n2
         );
         res.json(result);
       } catch (error) {

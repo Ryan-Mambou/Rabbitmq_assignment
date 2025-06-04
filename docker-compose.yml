@@ -38,6 +38,7 @@ services:
   # Worker Addition
   worker-add:
     build: .
+    container_name: rabbitmq-worker-add
     environment:
       - RABBITMQ_URL=amqp://user:password@rabbitmq:5672
     depends_on:
@@ -47,12 +48,11 @@ services:
       - rabbitmq_network
     command: ["node", "src/worker.js", "add"]
     restart: unless-stopped
-    deploy:
-      replicas: 2
 
   # Worker Soustraction
   worker-sub:
     build: .
+    container_name: rabbitmq-worker-sub
     environment:
       - RABBITMQ_URL=amqp://user:password@rabbitmq:5672
     depends_on:
@@ -62,12 +62,11 @@ services:
       - rabbitmq_network
     command: ["node", "src/worker.js", "sub"]
     restart: unless-stopped
-    deploy:
-      replicas: 2
 
   # Worker Multiplication
   worker-mul:
     build: .
+    container_name: rabbitmq-worker-mul
     environment:
       - RABBITMQ_URL=amqp://user:password@rabbitmq:5672
     depends_on:
@@ -77,12 +76,11 @@ services:
       - rabbitmq_network
     command: ["node", "src/worker.js", "mul"]
     restart: unless-stopped
-    deploy:
-      replicas: 2
 
   # Worker Division
   worker-div:
     build: .
+    container_name: rabbitmq-worker-div
     environment:
       - RABBITMQ_URL=amqp://user:password@rabbitmq:5672
     depends_on:
@@ -92,8 +90,6 @@ services:
       - rabbitmq_network
     command: ["node", "src/worker.js", "div"]
     restart: unless-stopped
-    deploy:
-      replicas: 2
 
 volumes:
   rabbitmq_data:

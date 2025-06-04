@@ -23,7 +23,7 @@ cd rabbitmq-distributed-computing
 ### 2. Démarrer l'application
 
 ```bash
-./docker-start.sh
+docker-compose up -d
 ```
 
 **C'est tout !** 🎉
@@ -35,7 +35,7 @@ cd rabbitmq-distributed-computing
 
 ## 💻 Utilisation
 
-1. **Démarrer** : `./docker-start.sh`
+1. **Démarrer** : `docker-compose up -d`
 2. **Ouvrir** : http://localhost:3000
 3. **Tester** : Remplir le formulaire et cliquer "Envoyer"
 4. **Observer** : Résultats en temps réel + logs d'activité
@@ -46,45 +46,47 @@ cd rabbitmq-distributed-computing
 - ✅ Option "Toutes les opérations"
 - ✅ Calculs aléatoires automatiques
 - ✅ Interface temps réel avec WebSocket
-- ✅ 8 workers distribués (2 par opération)
-
-## 🐛 Dépannage Rapide
-
-**Problème de port :**
-
-```bash
-killall node
-./docker-start.sh
-```
-
-**Problème Docker :**
-
-```bash
-docker-compose down -v --rmi all
-./docker-start.sh
-```
-
-**Voir les logs :**
-
-```bash
-docker-compose logs -f
-```
+- ✅ 4 workers spécialisés (1 par opération)
 
 **Arrêter l'application :**
 
 ```bash
-./docker-stop.sh
+docker-compose down
 ```
 
 ## 🎯 Architecture
 
-Le script `docker-start.sh` démarre automatiquement :
+La commande `docker-compose up -d` démarre automatiquement :
 
 - **1 RabbitMQ Server** (broker de messages)
 - **1 Web Server** (interface sur port 3000)
-- **8 Workers** (2 par opération : add, sub, mul, div)
+- **4 Workers** (1 par opération : add, sub, mul, div)
 
 Tout est containerisé et orchestré avec Docker Compose.
+
+## 🔧 Commandes Utiles
+
+```bash
+# Démarrer l'application
+docker-compose up -d
+
+# Voir les logs en temps réel
+docker-compose logs -f
+
+# Arrêter l'application
+docker-compose down
+
+# Redémarrer complètement
+docker-compose down -v --rmi all
+docker-compose up -d --build
+
+# État des services
+docker-compose ps
+
+# Logs d'un service spécifique
+docker-compose logs -f web-server
+docker-compose logs -f worker-add
+```
 
 ## 🔧 Pour les Développeurs
 
@@ -96,14 +98,6 @@ docker-compose up -d rabbitmq
 ./scripts/start-interface.sh
 ```
 
-**Commandes utiles :**
-
-```bash
-docker-compose ps                    # État des services
-docker-compose logs -f web-server    # Logs serveur web
-npm test                            # Tests
-```
-
 ---
 
-**🎉 Installation en 2 commandes : `git clone` + `./docker-start.sh` !**
+**🎉 Installation en 2 commandes : `git clone` + `docker-compose up -d` !**
