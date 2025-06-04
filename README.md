@@ -8,7 +8,7 @@ Application permettant d'envoyer des calculs mathématiques (addition, soustract
 
 ## 🏗️ Architecture RabbitMQ
 
-![Architecture RabbitMQ](assets/images/architecture.drawio)
+![Architecture RabbitMQ](assets/images/architecture.drawio.png)
 
 Le système utilise une architecture RabbitMQ classique avec :
 
